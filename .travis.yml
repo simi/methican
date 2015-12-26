@@ -8,3 +8,5 @@ before_install:
 script:
   - testem ci -l phantomjs
   - rake
+
+after_script: git diff
