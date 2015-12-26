@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "testem ci",
-    "compile": "node_modules/canopy/bin/canopy methic_parser.peg --lang js"
+    "compile": "node_modules/canopy/bin/canopy methic_parser.peg --lang js",
+    "verify": "npm run-script compile && npm test"
   },
   "author": "Josef Šimánek",
   "license": "MIT",
