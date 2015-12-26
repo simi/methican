@@ -4,7 +4,8 @@
   "description": "Simple arithmetic",
   "main": "index.js",
   "scripts": {
-    "test": "testem ci"
+    "test": "testem ci",
+    "compile": "node_modules/canopy/bin/canopy methic_parser.peg --lang js"
   },
   "author": "Josef Šimánek",
   "license": "MIT",
