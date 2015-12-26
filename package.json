@@ -1,0 +1,15 @@
+{
+  "name": "methic",
+  "version": "0.0.1",
+  "description": "Simple arithmetic",
+  "main": "index.js",
+  "scripts": {
+    "test": "testem"
+  },
+  "author": "Josef Šimánek",
+  "license": "MIT",
+  "devDependencies": {
+    "canopy": "^0.3.0",
+    "jasmine": "^2.4.1"
+  }
+}
