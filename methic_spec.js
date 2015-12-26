@@ -1,4 +1,13 @@
 describe('Methic', function(){
+  it('number', function() {
+    var result = Methic.parse('10').eval({});
+    expect(result).toBe(10);
+  });
+
+  it('variable', function() {
+    var result = Methic.parse('x').eval({x: 10});
+    expect(result).toBe(10);
+  });
   it('subtraction', function() {
     var result = Methic.parse('10 - 4').eval();
     expect(result).toBe(6);
