@@ -1,4 +1,4 @@
-require './methic_parser'
+require_relative 'methic_parser'
 
 module Methic
   module Types
