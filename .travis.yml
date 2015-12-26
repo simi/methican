@@ -1,2 +1,10 @@
-language: node_js
-script: testem ci -l phantomjs
+language: ruby
+rvm: 2.2
+before_install:
+  - npm install
+  - npm run-script compile
+  - rake compile
+
+script:
+  - testem ci -l phantomjs
+  - rake
