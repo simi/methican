@@ -11,6 +11,16 @@ describe('Methic', function(){
     result = Methic.parse('w1.ryba').eval({"w1.ryba": 10});
     expect(result).toBe(10);
   });
+
+  it('formula', function() {
+    var result = Methic.parse('test1.ryba1 * (test1.ryba2 + 10)').eval({
+      "test1.ryba1": 4,
+      "test1.ryba2": 6
+    });
+
+    expect(result).toBe(64);
+  });
+
   it('subtraction', function() {
     var result = Methic.parse('10 - 4').eval();
     expect(result).toBe(6);

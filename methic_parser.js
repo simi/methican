@@ -560,7 +560,15 @@
           var address5 = FAILURE;
           var remaining2 = 0, index5 = this._offset, elements3 = [], address6 = true;
           while (address6 !== FAILURE) {
+            var index6 = this._offset;
             address6 = this._read_letter();
+            if (address6 === FAILURE) {
+              this._offset = index6;
+              address6 = this._read_number_character();
+              if (address6 === FAILURE) {
+                this._offset = index6;
+              }
+            }
             if (address6 !== FAILURE) {
               elements3.push(address6);
               --remaining2;

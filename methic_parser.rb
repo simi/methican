@@ -533,7 +533,15 @@ module MethicParser
           address5 = FAILURE
           remaining2, index5, elements3, address6 = 0, @offset, [], true
           until address6 == FAILURE
+            index6 = @offset
             address6 = _read_letter
+            if address6 == FAILURE
+              @offset = index6
+              address6 = _read_number_character
+              if address6 == FAILURE
+                @offset = index6
+              end
+            end
             unless address6 == FAILURE
               elements3 << address6
               remaining2 -= 1

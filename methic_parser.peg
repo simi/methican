@@ -10,7 +10,7 @@ grammar MethicParser
                <BinaryOperation>
   multitive_op <- ('*' / '/') <MultitiveOpNode>
   primary <- variable / number / '('? space expression space ')'? <PrimaryNode>
-  variable <- (letter+ (number_character / dot)* letter*) <TextNode>
+  variable <- (letter+ (number_character / dot)* (letter / number_character)*) <TextNode>
   letter <- [a-zA-Z]
   dot <- '.'
   number_character <- [0-9]

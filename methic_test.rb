@@ -19,6 +19,10 @@ class MethicTest < Minitest::Test
     assert_equal 10, parse('y').eval('y' => 10)
   end
 
+  def test_formula
+    assert_equal 64, parse('test1.ryba1 * (test1.ryba2 + 10)').eval('test1.ryba1' => 4, 'test1.ryba2' => 6)
+  end
+
   def test_addition
     assert_equal 10, parse('x + 5').eval('x' => 5)
   end
