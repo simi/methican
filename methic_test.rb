@@ -14,6 +14,7 @@ class MethicTest < Minitest::Test
 
   def test_variable
     assert_equal 0, parse('Xy1xY').eval('Xy1xY' => 0)
+    assert_equal 10, parse('w1.ryba').eval('w1.ryba' => 10)
     assert_equal 3, parse('x').eval('x' => 3)
     assert_equal 10, parse('y').eval('y' => 10)
   end

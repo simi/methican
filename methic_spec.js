@@ -7,6 +7,9 @@ describe('Methic', function(){
   it('variable', function() {
     var result = Methic.parse('x').eval({x: 10});
     expect(result).toBe(10);
+
+    result = Methic.parse('w1.ryba').eval({"w1.ryba": 10});
+    expect(result).toBe(10);
   });
   it('subtraction', function() {
     var result = Methic.parse('10 - 4').eval();

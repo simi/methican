@@ -491,23 +491,7 @@ module MethicParser
       address1 = FAILURE
       remaining0, index2, elements1, address2 = 1, @offset, [], true
       until address2 == FAILURE
-        chunk0 = nil
-        if @offset < @input_size
-          chunk0 = @input[@offset...@offset + 1]
-        end
-        if chunk0 =~ /\A[a-zA-Z]/
-          address2 = TreeNode.new(@input[@offset...@offset + 1], @offset)
-          @offset = @offset + 1
-        else
-          address2 = FAILURE
-          if @offset > @failure
-            @failure = @offset
-            @expected = []
-          end
-          if @offset == @failure
-            @expected << "[a-zA-Z]"
-          end
-        end
+        address2 = _read_letter
         unless address2 == FAILURE
           elements1 << address2
           remaining0 -= 1
@@ -524,21 +508,13 @@ module MethicParser
         address3 = FAILURE
         remaining1, index3, elements2, address4 = 0, @offset, [], true
         until address4 == FAILURE
-          chunk1 = nil
-          if @offset < @input_size
-            chunk1 = @input[@offset...@offset + 1]
-          end
-          if chunk1 =~ /\A[0-9]/
-            address4 = TreeNode.new(@input[@offset...@offset + 1], @offset)
-            @offset = @offset + 1
-          else
-            address4 = FAILURE
-            if @offset > @failure
-              @failure = @offset
-              @expected = []
-            end
-            if @offset == @failure
-              @expected << "[0-9]"
+          index4 = @offset
+          address4 = _read_number_character
+          if address4 == FAILURE
+            @offset = index4
+            address4 = _read_dot
+            if address4 == FAILURE
+              @offset = index4
             end
           end
           unless address4 == FAILURE
@@ -555,32 +531,16 @@ module MethicParser
         unless address3 == FAILURE
           elements0 << address3
           address5 = FAILURE
-          remaining2, index4, elements3, address6 = 0, @offset, [], true
+          remaining2, index5, elements3, address6 = 0, @offset, [], true
           until address6 == FAILURE
-            chunk2 = nil
-            if @offset < @input_size
-              chunk2 = @input[@offset...@offset + 1]
-            end
-            if chunk2 =~ /\A[a-zA-Z]/
-              address6 = TreeNode.new(@input[@offset...@offset + 1], @offset)
-              @offset = @offset + 1
-            else
-              address6 = FAILURE
-              if @offset > @failure
-                @failure = @offset
-                @expected = []
-              end
-              if @offset == @failure
-                @expected << "[a-zA-Z]"
-              end
-            end
+            address6 = _read_letter
             unless address6 == FAILURE
               elements3 << address6
               remaining2 -= 1
             end
           end
           if remaining2 <= 0
-            address5 = TreeNode.new(@input[index4...@offset], index4, elements3)
+            address5 = TreeNode.new(@input[index5...@offset], index5, elements3)
             @offset = @offset
           else
             address5 = FAILURE
@@ -607,6 +567,90 @@ module MethicParser
       end
       address0.extend(@types::TextNode)
       @cache[:variable][index0] = [address0, @offset]
+      return address0
+    end
+
+    def _read_letter
+      address0, index0 = FAILURE, @offset
+      cached = @cache[:letter][index0]
+      if cached
+        @offset = cached[1]
+        return cached[0]
+      end
+      chunk0 = nil
+      if @offset < @input_size
+        chunk0 = @input[@offset...@offset + 1]
+      end
+      if chunk0 =~ /\A[a-zA-Z]/
+        address0 = TreeNode.new(@input[@offset...@offset + 1], @offset)
+        @offset = @offset + 1
+      else
+        address0 = FAILURE
+        if @offset > @failure
+          @failure = @offset
+          @expected = []
+        end
+        if @offset == @failure
+          @expected << "[a-zA-Z]"
+        end
+      end
+      @cache[:letter][index0] = [address0, @offset]
+      return address0
+    end
+
+    def _read_dot
+      address0, index0 = FAILURE, @offset
+      cached = @cache[:dot][index0]
+      if cached
+        @offset = cached[1]
+        return cached[0]
+      end
+      chunk0 = nil
+      if @offset < @input_size
+        chunk0 = @input[@offset...@offset + 1]
+      end
+      if chunk0 == "."
+        address0 = TreeNode.new(@input[@offset...@offset + 1], @offset)
+        @offset = @offset + 1
+      else
+        address0 = FAILURE
+        if @offset > @failure
+          @failure = @offset
+          @expected = []
+        end
+        if @offset == @failure
+          @expected << "'.'"
+        end
+      end
+      @cache[:dot][index0] = [address0, @offset]
+      return address0
+    end
+
+    def _read_number_character
+      address0, index0 = FAILURE, @offset
+      cached = @cache[:number_character][index0]
+      if cached
+        @offset = cached[1]
+        return cached[0]
+      end
+      chunk0 = nil
+      if @offset < @input_size
+        chunk0 = @input[@offset...@offset + 1]
+      end
+      if chunk0 =~ /\A[0-9]/
+        address0 = TreeNode.new(@input[@offset...@offset + 1], @offset)
+        @offset = @offset + 1
+      else
+        address0 = FAILURE
+        if @offset > @failure
+          @failure = @offset
+          @expected = []
+        end
+        if @offset == @failure
+          @expected << "[0-9]"
+        end
+      end
+      @cache[:number_character][index0] = [address0, @offset]
       return address0
     end
 
